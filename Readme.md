@@ -1,6 +1,6 @@
 # 🚀 Sistema de Gestión de Empleados y Autenticación con JWT – Spring Boot
 
-![Java](https://img.shields.io/badge/Java-17-blue) 
+![Java](https://img.shields.io/badge/Java-17-blue)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.5-brightgreen)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0+-orange)
 ![Maven](https://img.shields.io/badge/Maven-3.9.0-red)
@@ -9,7 +9,8 @@
 ---
 
 ## 📌 Descripción
-API RESTful construida con **Spring Boot** para gestionar empleados, con registro e inicio de sesión seguro usando **JWT (JSON Web Tokens)**.  
+
+API RESTful construida con **Spring Boot** para gestionar empleados, con registro e inicio de sesión seguro usando **JWT (JSON Web Tokens)**.
 
 Cumple con la evidencia **GA7-220501096-AA5-EV01** del programa de **Análisis y Desarrollo de Software – SENA**.
 
@@ -17,39 +18,37 @@ Cumple con la evidencia **GA7-220501096-AA5-EV01** del programa de **Análisis y
 
 ## 📂 Estructura del Proyecto
 
-
+```
 src/
-├── auth/ → Controladores y servicios JWT
-│ ├── AuthController.java
-│ ├── AuthService.java
-│ └── JwtUtil.java
-├── config/ → Configuración de seguridad y JWT
-│ ├── SecurityConfig.java
-│ └── JwtAuthenticationFilter.java
-├── controller/ → Controladores de empleados
-│ └── EmpleadoController.java
-├── model/ → Entidades
-│ ├── Usuario.java
-│ └── Empleado.java
-├── repository/ → Repositorios JPA
-│ ├── UsuarioRepository.java
-│ └── EmpleadoRepository.java
-├── service/ → Lógica de negocio
-│ └── EmpleadoService.java
-├── dto/ → Clases DTO (opcional)
-│ └── LoginRequest.java
+├── auth/                → Controladores y servicios JWT
+│   ├── AuthController.java
+│   ├── AuthService.java
+│   └── JwtUtil.java
+├── config/              → Configuración de seguridad y JWT
+│   ├── SecurityConfig.java
+│   └── JwtAuthenticationFilter.java
+├── controller/          → Controladores de empleados
+│   └── EmpleadoController.java
+├── model/               → Entidades
+│   ├── Usuario.java
+│   └── Empleado.java
+├── repository/          → Repositorios JPA
+│   ├── UsuarioRepository.java
+│   └── EmpleadoRepository.java
+├── service/             → Lógica de negocio
+│   └── EmpleadoService.java
+├── dto/                 → Clases DTO (opcional)
+│   └── LoginRequest.java
 └── DemoSpringApplication.java
-
-
+```
 
 ---
 
 ## ⚙️ Configuración y Ejecución
 
-### 1️⃣ Base de Datos MySQL  
-Crea una base de datos llamada `empresa` y configura tus credenciales en `src/main/resources/application.properties`.
+### 1️⃣ Base de Datos MySQL
 
-> ⚠️ Reemplaza `TU_USUARIO` y `TU_CONTRASEÑA` por tus datos reales.
+Crea la base de datos `empresa` y configura `src/main/resources/application.properties`:
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/empresa?useSSL=false&allowPublicKeyRetrieval=true
@@ -64,45 +63,58 @@ server.port=8080
 
 jwt.secret=YWhma2xhaGZrbGFoc2ZrYWhmYXNrZmhhc2tkZmhrYXNoZmFrc2g=
 jwt.expiration=86400000
+```
 
-2️⃣ Compilación y Ejecución
+### 2️⃣ Compilación y Ejecución
 
-# Compilar el proyecto
+```bash
 mvn clean package
-
-# Ejecutar el JAR
 java -jar target/gestion-empleados-1.0-SNAPSHOT.jar
+```
 
-La API estará disponible en: http://localhost:8080
+La API estará disponible en: `http://localhost:8080`
 
-🔐 Endpoints de Autenticación (Públicos)
+---
+
+## 🔐 Endpoints de Autenticación (Públicos)
+
 | Endpoint             | Método | Descripción                     |
 | -------------------- | ------ | ------------------------------- |
 | `/api/auth/register` | POST   | Registro de usuario             |
 | `/api/auth/login`    | POST   | Inicio de sesión (devuelve JWT) |
 
+**Ejemplo de Registro:**
 
-Ejemplo de Registro:
+```json
 {
   "nombre": "Mónica Cañas",
   "correo": "monica@example.com",
   "contrasena": "SuContraseñaSegura"
 }
+```
 
-Ejemplo de Login:
+**Ejemplo de Login:**
 
+```json
 {
   "correo": "monica@example.com",
   "contrasena": "SuContraseñaSegura"
 }
+```
 
-Respuesta Exitosa:
+**Respuesta Exitosa:**
+
+```json
 {
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 }
-💼 Endpoints de Empleados (Protegidos)
+```
 
-Todas las solicitudes deben incluir el Header: Authorization: Bearer <TOKEN>
+---
+
+## 💼 Endpoints de Empleados (Protegidos)
+
+Todas las solicitudes deben incluir el Header: `Authorization: Bearer <TOKEN>`
 
 | Método | URL                 | Descripción                  | Cuerpo (JSON)                                                                                       |
 | ------ | ------------------- | ---------------------------- | --------------------------------------------------------------------------------------------------- |
@@ -112,24 +124,25 @@ Todas las solicitudes deben incluir el Header: Authorization: Bearer <TOKEN>
 | PUT    | /api/empleados/{id} | Actualiza empleado existente | Igual que POST                                                                                      |
 | DELETE | /api/empleados/{id} | Elimina empleado por ID      | N/A                                                                                                 |
 
-🧠 Notas Clave
+---
 
-Seguridad: Contraseñas encriptadas con BCryptPasswordEncoder.
+## 🧠 Notas Clave
 
-Validación de Correo: Unicidad en registro y POST/PUT de empleados.
+* **Seguridad:** Contraseñas encriptadas con `BCryptPasswordEncoder`.
+* **Validación de Correo:** Unicidad en registro y POST/PUT de empleados.
+* **Ciclo de Dependencia:** Resuelto entre `SecurityConfig` y `JwtAuthenticationFilter` usando `@Lazy`.
 
-Ciclo de Dependencia: Resuelto entre SecurityConfig y JwtAuthenticationFilter usando @Lazy.
+---
 
-🧪 Pruebas con Postman
+## 🧪 Pruebas con Postman
 
 1. Importa la colección de endpoints.
-
-2. Para rutas protegidas, agrega Header:
-
-Authorization: Bearer <TOKEN>
-
+2. Para rutas protegidas, agrega Header: `Authorization: Bearer <TOKEN>`
 3. Prueba CRUD de empleados.
 
+**Ejemplo de creación de empleado:**
+
+```json
 POST /api/empleados
 {
   "nombre": "Carlos Gómez",
@@ -137,7 +150,11 @@ POST /api/empleados
   "salario": 4500000,
   "fechaIngreso": "2024-02-01"
 }
-Respuesta:
+```
+
+**Respuesta:**
+
+```json
 {
   "id": 1,
   "nombre": "Carlos Gómez",
@@ -145,21 +162,23 @@ Respuesta:
   "salario": 4500000,
   "fechaIngreso": "2024-02-01"
 }
-📚 Referencias
+```
 
-Spring Boot Docs
+---
 
-Spring Security JWT
+## 📚 Referencias
 
-MySQL Docs
+* [Spring Boot Docs](https://docs.spring.io/spring-boot/docs/current/reference/html/)
+* [Spring Security JWT](https://www.baeldung.com/spring-security-oauth-jwt)
+* [MySQL Docs](https://dev.mysql.com/doc/)
+
+---
 
 ### 👩‍🎓 Información del Aprendiz
 
-**Nombre:** Mónica Ismelia Cañas Reyes  
-**Programa:** Tecnólogo en Análisis y Desarrollo de Software  
-**Institución:** Servicio Nacional de Aprendizaje – SENA  
-**Centro:** Centro Nacional de Asistencia Técnica a la Industria – ASTIN  
-**Evidencia:** GA7-220501096-AA5-EV01  
+**Nombre:** Mónica Ismelia Cañas Reyes
+**Programa:** Tecnólogo en Análisis y Desarrollo de Software
+**Institución:** Servicio Nacional de Aprendizaje – SENA
+**Centro:** Centro Nacional de Asistencia Técnica a la Industria – ASTIN
+**Evidencia:** GA7-220501096-AA5-EV01
 **Fecha:** Diciembre de 2025
-
----
