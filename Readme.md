@@ -22,91 +22,34 @@ Cumple con los requisitos de la evidencia **GA7-220501096-AA5-EV01: Diseño y De
 - **Construcción:** [Maven](https://maven.apache.org/)
 
 ---
-## 📂 Estructura del proyecto
-
-src/
-├── auth/ → Controlador, servicio y utilidades JWT
-├── config/ → Configuración de Spring Security
-├── model/ → Entidad Usuario
-├── repository/ → Repositorio JPA para Usuario
-└── DemoSpringApplication.java
-
-
-
 ---
 
 ## ⚙️ Configuración y Ejecución
 
 ### 1. Base de Datos MySQL
 Crea una base de datos llamada `empresa` y configura tus credenciales en `src/main/resources/application.properties`.
+---
+
+> ⚠️ Debes reemplazar `TU_USUARIO` y `TU_CONTRASEÑA` con tus datos reales de MySQL.
 
 ```properties
-# ----------------------------------------------
 # CONEXIÓN A LA BASE DE DATOS MYSQL
-# ----------------------------------------------
 spring.datasource.url=jdbc:mysql://localhost:3306/empresa?useSSL=false&allowPublicKeyRetrieval=true
-spring.datasource.username=TU_USUARIO      # <-- Cambia por tu usuario de MySQL
-spring.datasource.password=TU_CONTRASEÑA   # <-- Cambia por tu contraseña de MySQL
+spring.datasource.username=TU_USUARIO      # <-- Tu usuario de MySQL
+spring.datasource.password=TU_CONTRASEÑA   # <-- Tu contraseña de MySQL
 
-# ----------------------------------------------
 # CONFIGURACIÓN DE JPA / HIBERNATE
-# ----------------------------------------------
-spring.jpa.hibernate.ddl-auto=update       # Permite crear o modificar tablas sin borrar datos
-spring.jpa.show-sql=true                   # Muestra las consultas SQL en consola
-spring.jpa.properties.hibernate.format_sql=true # Formatea las consultas SQL
+spring.jpa.hibernate.ddl-auto=update       # Crea/modifica tablas sin borrar datos
+spring.jpa.show-sql=true                   # Muestra consultas SQL en consola
+spring.jpa.properties.hibernate.format_sql=true # Formatea SQL
 
-# ----------------------------------------------
 # CONFIGURACIÓN DEL SERVIDOR WEB
-# ----------------------------------------------
 server.port=8080
 
-# ----------------------------------------------
 # CONFIGURACIÓN JWT
-# ----------------------------------------------
 jwt.secret=YWhma2xhaGZrbGFoc2ZrYWhmYXNrZmhhc2tkZmhrYXNoZmFrc2g=
 jwt.expiration=86400000
-
-
-## ⚙️ Configuración y Ejecución
-
-1. **Base de Datos:**  
-
-⚙️ Configuración del application.properties
-Debes reemplazar el texto en mayúsculas (TU_USUARIO y TU_CONTRASEÑA) con tus datos reales de la base de datos MySQL.
-
-Properties
-
-# ----------------------------------------------
-# CONEXIÓN A LA BASE DE DATOS MYSQL
-# ----------------------------------------------
-spring.datasource.url=jdbc:mysql://localhost:3306/empresa?useSSL=false&allowPublicKeyRetrieval=true
-spring.datasource.username=TU_USUARIO  # <-- ¡COLOCA TU USUARIO DE MYSQL AQUÍ!
-spring.datasource.password=TU_CONTRASEÑA  # <-- ¡COLOCA TU CONTRASEÑA DE MYSQL AQUÍ!
-
-# ----------------------------------------------
-# CONFIGURACIÓN DE JPA / HIBERNATE
-# ----------------------------------------------
-# 'update' permite que Hibernate cree o modifique tablas sin borrar datos.
-spring.jpa.hibernate.ddl-auto=update
-# Muestra las consultas SQL generadas por Hibernate en la consola.
-spring.jpa.show-sql=true
-# Formatea las consultas SQL mostradas para facilitar la lectura.
-spring.jpa.properties.hibernate.format_sql=true
-
-# ----------------------------------------------
-# CONFIGURACIÓN DEL SERVIDOR WEB
-# ----------------------------------------------
-# Define el puerto en el que se ejecuta la aplicación (por defecto es 8080).
-server.port=8080
-
-# ----------------------------------------------
-# CONFIGURACIÓN JWT (YA INCLUIDA EN TU PROYECTO)
-# ----------------------------------------------
-# Estos parámetros son esenciales para la generación y validación del token.
-jwt.secret=YWhma2xhaGZrbGFoc2ZrYWhmYXNrZmhhc2tkZmhrYXNoZmFrc2g=
-jwt.expiration=86400000
-Una vez que edites las credenciales (spring.datasource.username y spring.datasource.password), tu aplicación estará lista para conectarse a MySQL y ejecutar el CRUD y la autenticación.
-
+```
 2. **Compilación:**  
    Desde la carpeta raíz del proyecto (`demo-spring`), compile el proyecto usando Maven:
    ```bash
