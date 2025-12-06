@@ -22,15 +22,49 @@ Cumple con los requisitos de la evidencia **GA7-220501096-AA5-EV01: Diseño y De
 - **Construcción:** [Maven](https://maven.apache.org/)
 
 ---
-📂 Estructura del proyecto
+## 📂 Estructura del proyecto
 
 src/
-├── auth/           → Controlador, servicio y utilidades JWT
-├── config/         → Configuración de Spring Security
-├── model/          → Entidad Usuario
-├── repository/     → Repositorio JPA para Usuario
+├── auth/ → Controlador, servicio y utilidades JWT
+├── config/ → Configuración de Spring Security
+├── model/ → Entidad Usuario
+├── repository/ → Repositorio JPA para Usuario
 └── DemoSpringApplication.java
 
+
+
+---
+
+## ⚙️ Configuración y Ejecución
+
+### 1. Base de Datos MySQL
+Crea una base de datos llamada `empresa` y configura tus credenciales en `src/main/resources/application.properties`.
+
+```properties
+# ----------------------------------------------
+# CONEXIÓN A LA BASE DE DATOS MYSQL
+# ----------------------------------------------
+spring.datasource.url=jdbc:mysql://localhost:3306/empresa?useSSL=false&allowPublicKeyRetrieval=true
+spring.datasource.username=TU_USUARIO      # <-- Cambia por tu usuario de MySQL
+spring.datasource.password=TU_CONTRASEÑA   # <-- Cambia por tu contraseña de MySQL
+
+# ----------------------------------------------
+# CONFIGURACIÓN DE JPA / HIBERNATE
+# ----------------------------------------------
+spring.jpa.hibernate.ddl-auto=update       # Permite crear o modificar tablas sin borrar datos
+spring.jpa.show-sql=true                   # Muestra las consultas SQL en consola
+spring.jpa.properties.hibernate.format_sql=true # Formatea las consultas SQL
+
+# ----------------------------------------------
+# CONFIGURACIÓN DEL SERVIDOR WEB
+# ----------------------------------------------
+server.port=8080
+
+# ----------------------------------------------
+# CONFIGURACIÓN JWT
+# ----------------------------------------------
+jwt.secret=YWhma2xhaGZrbGFoc2ZrYWhmYXNrZmhhc2tkZmhrYXNoZmFrc2g=
+jwt.expiration=86400000
 
 
 ## ⚙️ Configuración y Ejecución
